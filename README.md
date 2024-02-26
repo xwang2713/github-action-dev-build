@@ -2,6 +2,10 @@
 
 Build individual HPCC-Platform Project with Github Action
 
+Requirement: following Michael's instruction to create SECRETS.
+
+
+
 Pick a workflow script and uncommts push and disable workflow_dispatch:
 ```code
 on:
@@ -36,7 +40,7 @@ Get the first line first column and replace <GIT REF> in .github/workflows/build
 ```code
 COMMUNITY_REF:  <GIT REF>
 ```
-The default artifact file name: CE-HPCC-Platfor.mzip
+The default artifact file name: CE-HPCC-Platform-<os>.zip
 
 ## CE Plugins
 ```console
@@ -46,6 +50,18 @@ Get the first line first column and replace <GIT REF> in .github/workflows/build
 ```code
 COMMUNITY_REF:  <GIT REF>
 ```
-The default artifact file name: CE-HPCC-Plugins.mzip
+The default artifact file name: CE-HPCC-Plugins-<os>.zip
+
+## LN Platform and Clienttools
+Get LN and Platform git reference
+```console
+git show-ref --head <branch name>
+```
+Get the first line first column and replace <GIT CE REF> and <GIT LN REF> in .github/workflows/build-ln-platform.yml
+```code
+COMMUNITY_REF:  <GIT CE REF>
+LN_REF:  <GIT LN REF>
+```
+The default artifact file name: LN-Packages-<os>.mzip
 
 
