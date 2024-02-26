@@ -27,3 +27,25 @@ Get the first line first column and replace <GIT REF> in .github/workflows/build
 COMMUNITY_REF:  <GIT REF>
 ```
 The default artifact file name: html-help-documents.zip
+
+## CE Platform
+```console
+git show-ref --head <branch name>
+```
+Get the first line first column and replace <GIT REF> in .github/workflows/build-ce-platform.yml
+```code
+COMMUNITY_REF:  <GIT REF>
+```
+The default artifact file name: CE-HPCC-Platfor.mzip
+
+## CE Plugins
+```console
+git show-ref --head <branch name>
+```
+Get the first line first column and replace <GIT REF> in .github/workflows/build-ce-plugins.yml
+```code
+COMMUNITY_REF:  <GIT REF>
+```
+The default artifact file name: CE-HPCC-Plugins.mzip
+
+
