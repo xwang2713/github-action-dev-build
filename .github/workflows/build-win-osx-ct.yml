@@ -12,8 +12,11 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      COMMUNITY_REF: "3eb770915a09815ab4342d157a25ef306f2b1523"
-      LN_REF: "bfe0d6a9fce8d0caa73417b0b9be748fab9f75ab"
+      #COMMUNITY_REF: "3eb770915a09815ab4342d157a25ef306f2b1523"
+      #LN_REF: "bfe0d6a9fce8d0caa73417b0b9be748fab9f75ab"
+      COMMUNITY_REF: <GIT REF>
+      LN_REF: <GIT REF>
+      GITHUB_ACCOUNT: ${{ github.repository_owner }}
     runs-on: ubuntu-22.04
     permissions:
       contents: write
@@ -33,10 +36,13 @@ jobs:
       candidate_branch: ${{ steps.vars.outputs.candidate_branch }}
       cmake_docker_config: ${{ steps.vars.outputs.cmake_docker_config }}
       gpg_import: ${{ steps.vars.outputs.gpg_import }}
+      github_account: ${{ steps.vars.outputs.github_account }}
     steps:
       - name: Calculate vars
         id: vars
         run: |
+          github_account=${{ env.GITHUB_ACCOUNT }}
+          echo "github_account=$github_account" >> $GITHUB_OUTPUT
           echo "folder_platform=${{ github.workspace }}/HPCC-Platform" >> $GITHUB_OUTPUT
           echo 'mount_platform=source="${{ github.workspace }}/HPCC-Platform",target=/hpcc-dev/HPCC-Platform,type=bind,consistency=cached' >> $GITHUB_OUTPUT
           echo "folder_ln=${{ github.workspace }}/LN" >> $GITHUB_OUTPUT
@@ -56,7 +62,7 @@ jobs:
           candidate_branch=$(echo $community_base_ref | cut -d'/' -f3)
           echo "candidate_branch=$candidate_branch" >> $GITHUB_OUTPUT
           echo "candidate_base_branch=$(echo $candidate_branch | awk -F'.' -v OFS='.' '{ $3="x"; print }')" >> $GITHUB_OUTPUT
-          echo "cmake_docker_config=-DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_FILES_DIR=/hpcc-dev -DCPACK_THREADS=0 -DUSE_OPTIONAL=OFF -DSIGN_MODULES=${{ github.repository_owner == 'hpcc-systems' && 'ON' || 'OFF' }}" >> $GITHUB_OUTPUT
+          echo "cmake_docker_config=-DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_FILES_DIR=/hpcc-dev -DCPACK_THREADS=0 -DUSE_OPTIONAL=OFF -DSIGN_MODULES=${{ env.GITHUB_ACCOUNT == 'hpcc-systems' && 'ON' || 'OFF' }}" >> $GITHUB_OUTPUT
           echo 'gpg_import=gpg --batch --import /hpcc-dev/build/private.key' >> $GITHUB_OUTPUT
 
       - name: Print vars
@@ -110,7 +116,7 @@ jobs:
       - name: Checkout HPCC-Platform
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository_owner }}/HPCC-Platform
+          repository: ${{ needs.preamble.outputs.github_account }}/HPCC-Platform
           ref: ${{ needs.preamble.outputs.community_ref }}
           submodules: recursive
           path: ./HPCC-Platform
@@ -118,7 +124,7 @@ jobs:
       - name: Checkout LN
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository_owner }}/LN
+          repository: ${{ needs.preamble.outputs.github_account }}/LN
           token: ${{ secrets.LNB_TOKEN }}
           ref: ${{ needs.preamble.outputs.internal_ref }}
           submodules: recursive

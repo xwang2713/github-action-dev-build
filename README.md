@@ -1,20 +1,23 @@
 # github-action-dev-build
 
 Build individual HPCC-Platform Project with Github Action
+To use this clone this repo to your Github account, pick a github action script under .github/workflows/
+Replace the <GIT REF> for the HPCC-Platform/LN/ECLIDE branch. You also can replace GITHUB_ACCOUNT if users
+want to build with other Github account.
+Users can modify the CMake options as they wish
 
 Requirement: following Michael's instruction to create SECRETS.
 
 
-
-Pick a workflow script and uncommts push and disable workflow_dispatch:
+To trigger a build automatically uncommts push and disable workflow_dispatch:
 ```code
 on:
   #workflow_dispatch:
   push:
 ```
-Update <GIT_REF> and related settings following each build case
 
-To trigger the build:
+Commit the change and submit this branch to start the build:
+If you don't set "push" you can pick a script from .github/workflow/ and manually run the workflow Github Action
 ```console
 git add <workspaces>/<script>
 git commit
@@ -62,6 +65,28 @@ Get the first line first column and replace <GIT CE REF> and <GIT LN REF> in .gi
 COMMUNITY_REF:  <GIT CE REF>
 LN_REF:  <GIT LN REF>
 ```
-The default artifact file name: LN-Packages-<os>.mzip
+The default artifact file name: LN-Packages-<os>.zip
 
+## Windows and OSX Community/LN Clienttools
+Get LN and Platform git reference
+```console
+git show-ref --head <branch name>
+```
+Get the first line first column and replace <GIT CE REF> and <GIT LN REF> in .github/workflows/build-win-osx.yml
+```code
+COMMUNITY_REF:  <GIT CE REF>
+LN_REF:  <GIT LN REF>
+```
+The default artifact file names: WinOSX-Clienttools.zip and WinOSX-LN-Clienttools.zip
 
+## ECLIDE Build
+Get LN and Platform git reference
+```console
+git show-ref --head <branch name>
+```
+Get the first line first column and replace <GIT CE REF> and <GIT LN REF> in .github/workflows/build-ide.yml
+```code
+COMMUNITY_REF:  <GIT CE REF>
+LN_REF:  <GIT LN REF>
+```
+The default artifact file names: ECLIDE.zip

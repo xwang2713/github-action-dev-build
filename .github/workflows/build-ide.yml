@@ -5,15 +5,17 @@ env:
   VCPKG_NUGET_REPOSITORY: "https://github.com/hpcc-systems/vcpkg"
 
 on:
-  #workflow_dispatch
-  push:
+  workflow_dispatch
+  #push:
 
 jobs:
   preamble:
     name: Publish Release
     env:
-      COMMUNITY_REF: "3eb770915a09815ab4342d157a25ef306f2b1523"
-      ECLIDE_REF: "97207e7283550c3d6205333b8322498eddfddc8b"
+      #COMMUNITY_REF: "3eb770915a09815ab4342d157a25ef306f2b1523"
+      #ECLIDE_REF: "97207e7283550c3d6205333b8322498eddfddc8b"
+      COMMUNITY_REF: <GIT REF>
+      ECLIDE_REF: <GIT REF>
       GITHUB_ACCOUNT: ${{ github.repository_owner }}
     runs-on: ubuntu-22.04
     permissions:

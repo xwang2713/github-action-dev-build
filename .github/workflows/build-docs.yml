@@ -14,6 +14,7 @@ jobs:
     env:
       #COMMUNITY_REF: "dc1cdacdbdda6e5ca1c5b836e130c2deb2d2fe62"
       COMMUNITY_REF:  <GIT REF>
+      GITHUB_ACCOUNT: ${{ github.repository_owner }}
     runs-on: ubuntu-22.04
     permissions:
       contents: write
@@ -29,10 +30,13 @@ jobs:
       candidate_branch: ${{ steps.vars.outputs.candidate_branch }}
       cmake_docker_config: ${{ steps.vars.outputs.cmake_docker_config }}
       gpg_import: ${{ steps.vars.outputs.gpg_import }}
+      github_account: ${{ steps.vars.outputs.github_account }}
     steps:
       - name: Calculate vars
         id: vars
         run: |
+          github_account=${{ env.GITHUB_ACCOUNT }}
+          echo "github_account=$github_account" >> $GITHUB_OUTPUT
           echo "folder_platform=${{ github.workspace }}/HPCC-Platform" >> $GITHUB_OUTPUT
           echo 'mount_platform=source="${{ github.workspace }}/HPCC-Platform",target=/hpcc-dev/HPCC-Platform,type=bind,consistency=cached' >> $GITHUB_OUTPUT
           echo "folder_build=${{ github.workspace }}/build" >> $GITHUB_OUTPUT
@@ -46,7 +50,7 @@ jobs:
           candidate_branch=$(echo $community_base_ref | cut -d'/' -f3)
           echo "candidate_branch=$candidate_branch" >> $GITHUB_OUTPUT
           echo "candidate_base_branch=$(echo $candidate_branch | awk -F'.' -v OFS='.' '{ $3="x"; print }')" >> $GITHUB_OUTPUT
-          echo "cmake_docker_config=-DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_FILES_DIR=/hpcc-dev -DCPACK_THREADS=0 -DUSE_OPTIONAL=OFF -DSIGN_MODULES=${{ github.repository_owner == 'hpcc-systems' && 'ON' || 'OFF' }}" >> $GITHUB_OUTPUT
+          echo "cmake_docker_config=-DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_FILES_DIR=/hpcc-dev -DCPACK_THREADS=0 -DUSE_OPTIONAL=OFF -DSIGN_MODULES=${{ env.GITHUB_ACCOUNT == 'hpcc-systems' && 'ON' || 'OFF' }}" >> $GITHUB_OUTPUT
           echo 'gpg_import=gpg --batch --import /hpcc-dev/build/private.key' >> $GITHUB_OUTPUT
 
       - name: Print vars
@@ -87,7 +91,7 @@ jobs:
       - name: Checkout HPCC-Platform
         uses: actions/checkout@v3
         with:
-          repository: ${{ github.repository_owner }}/HPCC-Platform
+          repository: ${{ needs.preamble.outputs.github_account }}/HPCC-Platform
           ref: ${{ needs.preamble.outputs.community_ref }}
           submodules: recursive
           path: ${{ needs.preamble.outputs.folder_platform }}
@@ -124,8 +128,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: ${{ needs.preamble.outputs.folder_platform }}/dockerfiles/vcpkg/${{ matrix.os }}.dockerfile
           context: ${{ needs.preamble.outputs.folder_platform }}/dockerfiles/vcpkg
-          push: ${{ github.repository_owner == 'hpcc-systems' }}
-          load: ${{ github.repository_owner != 'hpcc-systems' }}
+          push: ${{ needs.preamble.outputs.github_account == 'hpcc-systems' }}
+          load: ${{ needs.preamble.outputs.github_account != 'hpcc-systems' }}
           build-args: |
             VCPKG_REF=${{ steps.vars.outputs.vcpkg_sha_short }}
           tags: |
