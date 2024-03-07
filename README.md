@@ -1,5 +1,34 @@
 # github-action-dev-build
 Build individual HPCC-Platform Project Artifacts with Github Action
+This repository contains the sauce for building HPCC-Platform using GitHub Actions. 
+Clone this repository and customize for your GitHub repository. 
+# Customization
+In order to get this build action to work for your individual repository. 
+## prerequisites: 
+  1. input your *dockerusername* and *dockerpassword* for your docker.io credentials into github secrets.
+  2. get your community ref
+       a. on github cli :
+          ```
+     git show-ref --head
+     ```
+       b. get that head
+                       info - should be a long string
+     SAVE THAT INFO to input in to the build-docs.yaml file on line 16
+     it must be an exact match.
+
+## Actions Set-Up 
+1. Clone the github-action-dev-build repository
+2. Go to .github/workflows
+3. Edit build-docs.yaml:
+   a. lines 7-9 comment out workflow_dispatch and uncomment #push to enable build on push
+   b. around line 16 you add your community ref you got from  above:
+        Find =>  COMMUNITY_REF:  <GIT REF>
+
+   And replce <GIT REF> with your ReF sting you copied 
+   c. Need to save the file then commit to your master
+      
+6. make a push to the repo - it 'should' build
+7. Retrieve Artifacts (Monitor Job) from the GitHub Actions tab    
 
 ## Original Developer Notes
 Pick a workflow script and uncommts push and disable workflow_dispatch:
@@ -19,7 +48,7 @@ git push origin +master
 ```
 The output packages should be in artifact of the action
 
-## Documentation
+## Obtaining your GIT REF 
 ```console
 git show-ref --head <branch name>
 ```
@@ -29,29 +58,3 @@ COMMUNITY_REF:  <GIT REF>
 ```
 The default artifact file name: html-help-documents.zip
 
-
-
-# Customization
-In order to get this build action to work for your individual repository. 
-## prerequisite: 
-  1. input your dockerusername and dockerpassword for your docker.io credentials into your github secrets.
-  2. get your community ref
-       a. on github cli :
-          ```
-     git show-ref --head
-     ```
-       b. get that head
-                       info - should be a long string
-     SAVE THAT INFO to input in the build-docs.yaml file on line 16
-     that must be an exact match. 
-
-## steps
-1. Clone this repository
-2. Go to .github/workflows
-3. Edit build-docs.yaml:
-   a. lines 7-9 comment out workflow_dispatch and uncomment #push to enable build on push
-   b. somewhere around line 16 you add your community ref you got from  above 
-   c. maybe that is it
-   
-6. make a push to the repo - it 'should' build
-   
