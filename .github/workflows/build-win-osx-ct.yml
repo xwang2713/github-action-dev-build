@@ -5,17 +5,17 @@ env:
   VCPKG_NUGET_REPOSITORY: "https://github.com/hpcc-systems/vcpkg"
 
 on:
-  workflow_dispatch
-  #push:
+  #workflow_dispatch
+  push:
 
 jobs:
   preamble:
     name: Publish Release
     env:
-      #COMMUNITY_REF: "3eb770915a09815ab4342d157a25ef306f2b1523"
-      #LN_REF: "bfe0d6a9fce8d0caa73417b0b9be748fab9f75ab"
-      COMMUNITY_REF: <GIT REF>
-      LN_REF: <GIT REF>
+      COMMUNITY_REF: "9679a5c8d8dbf55bd6908d9b8ec93fa173ed7306"
+      LN_REF:        "a4d0fdf699abfbf4331c59c4712163c25f6951e3"
+      #COMMUNITY_REF: <GIT REF>
+      #LN_REF: <GIT REF>
       GITHUB_ACCOUNT: ${{ github.repository_owner }}
     runs-on: ubuntu-22.04
     permissions:
@@ -84,7 +84,7 @@ jobs:
           - os: "windows-2022"
             mono: ""
             sudo: ""
-            cmake_config_options: '-T host=x64 -A x64 -DUSE_OPTIONAL=OFF -DCLIENTTOOLS_ONLY=ON -DUSE_AZURE=OFF -DUSE_CASSANDRA=OFF -DUSE_JAVA=OFF -DUSE_OPENLDAP=OFF'
+            cmake_config_options: '-T host=x64 -A x64 -DUSE_OPTIONAL=OFF -DCLIENTTOOLS_ONLY=ON -DUSE_AZURE=OFF -DUSE_CASSANDRA=OFF -DUSE_JAVA=OFF -DUSE_OPENLDAP=OFF -USE_PARQUET=ON'
             cmake_build_options: "--config Release --parallel $NUMBER_OF_PROCESSORS"
           #- os: "macos-12"
           #  mono: "mono"
