@@ -5,14 +5,14 @@ env:
   VCPKG_NUGET_REPOSITORY: "https://github.com/hpcc-systems/vcpkg"
 
 on:
-  workflow_dispatch
-  #push:
+  #workflow_dispatch
+  push:
 
 jobs:
   preamble:
     name: Publish Release
     env:
-      COMMUNITY_REF: "dc1cdacdbdda6e5ca1c5b836e130c2deb2d2fe62"
+      COMMUNITY_REF: "9efbb72fe576f378f86c76ca3a8aca7b3d570f96"
       #COMMUNITY_REF:  <GIT REF>
       GITHUB_ACCOUNT: ${{ github.repository_owner }}
     runs-on: ubuntu-22.04
@@ -64,7 +64,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-22.04
+          #- os: ubuntu-22.04
+          - os: rockylinux-8
           #- os: centos-7
           #  cmake_options_extra: "-DVCPKG_TARGET_TRIPLET=x64-centos-7-dynamic"
       fail-fast: false
@@ -151,6 +152,7 @@ jobs:
 
           docker run --rm --mount ${{ needs.preamble.outputs.mount_platform }} --mount ${{ needs.preamble.outputs.mount_build }} ${{ steps.vars.outputs.docker_tag_candidate_base }} "${{ needs.preamble.outputs.gpg_import }} && \
             cmake -S /hpcc-dev/HPCC-Platform -B /hpcc-dev/build ${{ needs.preamble.outputs.cmake_docker_config }} -DSIGN_MODULES_PASSPHRASE=${{ secrets.SIGN_MODULES_PASSPHRASE }} -DSIGN_MODULES_KEYID=${{ secrets.SIGN_MODULES_KEYID }} -DINCLUDE_PLUGINS=ON -DCONTAINERIZED=ON -DSUPPRESS_REMBED=ON -DSUPPRESS_V8EMBED=ON -DSUPPRESS_SPARK=ON -DCPACK_STRIP_FILES=OFF ${{ matrix.cmake_options_extra }} && \
+            yum install -y rpm-build.x86_64 && \
             cmake --build /hpcc-dev/build --parallel $(nproc) --target package"
           #docker run --rm --mount ${{ needs.preamble.outputs.mount_platform }} --mount ${{ needs.preamble.outputs.mount_build }} ${{ steps.vars.outputs.docker_tag_candidate_base }} "${{ needs.preamble.outputs.gpg_import }} && \
           #  cmake -S /hpcc-dev/HPCC-Platform -B /hpcc-dev/build ${{ needs.preamble.outputs.cmake_docker_config }} -DSIGN_MODULES_PASSPHRASE=${{ secrets.SIGN_MODULES_PASSPHRASE }} -DSIGN_MODULES_KEYID=${{ secrets.SIGN_MODULES_KEYID }} -DINCLUDE_PLUGINS=ON -DCONTAINERIZED=ON -DSUPPRESS_REMBED=ON -DSUPPRESS_V8EMBED=ON -DSUPPRESS_SPARK=ON -DCPACK_STRIP_FILES=ON ${{ matrix.cmake_options_extra }} && \
