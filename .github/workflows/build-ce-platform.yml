@@ -12,7 +12,7 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      COMMUNITY_REF: "dc1cdacdbdda6e5ca1c5b836e130c2deb2d2fe62"
+      COMMUNITY_REF: "ae0b9bff374be43efee12e8ab470ed891d6b0f56"
       #COMMUNITY_REF:  <GIT REF>
       GITHUB_ACCOUNT: ${{ github.repository_owner }}
     runs-on: ubuntu-22.04
