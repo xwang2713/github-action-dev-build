@@ -12,10 +12,10 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      #COMMUNITY_REF: "7f95c5258d514633cf5a859139b89e40cd4a457b"
-      #LN_REF: "12c5cba2d2add550b932eaa65f62675fb8e165ce"
-      COMMUNITY_REF:  <GIT REF>
-      LN_REF: <GIT REF>
+      COMMUNITY_REF: "c97a09f3c1fb41f6fe466e202da66a664c453f7c"
+      LN_REF: "8bee6ffc65ca8f3c930d4858e945947f7484bb0b"
+      #COMMUNITY_REF:  <GIT REF>
+      #LN_REF: <GIT REF>
       GITHUB_ACCOUNT: ${{ github.repository_owner }}
     runs-on: ubuntu-22.04
     permissions:
@@ -76,11 +76,12 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-22.04
-            name: LN
-          - os: centos-7
-            name: LN
-            cmake_options_extra: "-DVCPKG_TARGET_TRIPLET=x64-centos-7-dynamic"
+          #- os: ubuntu-22.04
+          #  name: LN
+          #- os: centos-7
+          #  name: LN
+          #  cmake_options_extra: "-DVCPKG_TARGET_TRIPLET=x64-centos-7-dynamic"
+          - os: rockylinux-8
       fail-fast: false
 
     steps:
@@ -173,6 +174,7 @@ jobs:
             sudo rm -rf ${{ needs.preamble.outputs.folder_build }}/CMakeFiles
             docker run --rm --mount ${{ needs.preamble.outputs.mount_platform }} --mount ${{ needs.preamble.outputs.mount_ln }} --mount ${{ needs.preamble.outputs.mount_build }} ${{ steps.vars.outputs.docker_tag_candidate_base }} "${{ needs.preamble.outputs.gpg_import }} && \
               cmake -S /hpcc-dev/LN -B /hpcc-dev/build -DHPCC_SOURCE_DIR=/hpcc-dev/HPCC-Platform ${{ needs.preamble.outputs.cmake_docker_config }} -DSIGN_MODULES_PASSPHRASE=${{ secrets.SIGN_MODULES_PASSPHRASE }} -DSIGN_MODULES_KEYID=${{ secrets.SIGN_MODULES_KEYID }} -D$plugin=ON -DINCLUDE_PLUGINS=ON -DCONTAINERIZED=OFF -DSUPPRESS_REMBED=ON -DSUPPRESS_V8EMBED=ON -DSUPPRESS_SPARK=ON -DCPACK_STRIP_FILES=OFF ${{ matrix.cmake_options_extra }} && \
+              yum install -y rpm-build.x86_64 && \
               cmake --build /hpcc-dev/build --parallel $(nproc) --target package"
           done
 
