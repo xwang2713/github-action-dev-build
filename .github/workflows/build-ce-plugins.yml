@@ -12,8 +12,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      #COMMUNITY_REF: "dc1cdacdbdda6e5ca1c5b836e130c2deb2d2fe62"
-      COMMUNITY_REF:  <GIT REF>
+      COMMUNITY_REF: "c97a09f3c1fb41f6fe466e202da66a664c453f7c"
+      #COMMUNITY_REF:  <GIT REF>
       GITHUB_ACCOUNT: ${{ github.repository_owner }}
     runs-on: ubuntu-22.04
     permissions:
@@ -65,7 +65,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-22.04
+          #- os: ubuntu-22.04
+          - os: rockylinux-8
           #- os: centos-7
           #  cmake_options_extra: "-DVCPKG_TARGET_TRIPLET=x64-centos-7-dynamic"
       fail-fast: false
@@ -147,12 +148,13 @@ jobs:
           mkdir -p ${{needs.preamble.outputs.folder_build }}
           ls -l
           echo "${{ secrets.SIGNING_SECRET }}" > ${{ needs.preamble.outputs.folder_build }}/private.key
-          plugins=("CASSANDRAEMBED" "COUCHBASEEMBED" "ECLBLAS" "H3" "JAVAEMBED" "KAFKA" "MEMCACHED" "MONGODBEMBED" "MYSQLEMBED" "NLP" "PARQUETEMBED" "REDIS" "REMBED" "SQLITE3EMBED" "SQS" "WASMEMBED" "PLATFORM" "CLIENTTOOLS_ONLY")
+          plugins=("CASSANDRAEMBED" "COUCHBASEEMBED" "ECLBLAS" "H3" "JAVAEMBED" "KAFKA" "MEMCACHED" "MONGODBEMBED" "MYSQLEMBED" "NLP" "PARQUETEMBED" "REDIS" "REMBED" "SQLITE3EMBED" "SQS" "WASMEMBED" "CLIENTTOOLS_ONLY")
           for plugin in "${plugins[@]}"; do
             sudo rm -f ${{ needs.preamble.outputs.folder_build }}/CMakeCache.txt
             sudo rm -rf ${{ needs.preamble.outputs.folder_build }}/CMakeFiles
             docker run --rm --mount ${{ needs.preamble.outputs.mount_platform }} --mount ${{ needs.preamble.outputs.mount_build }} ${{ steps.vars.outputs.docker_tag_candidate_base }} "${{ needs.preamble.outputs.gpg_import }} && \
               cmake -S /hpcc-dev/HPCC-Platform -B /hpcc-dev/build ${{ needs.preamble.outputs.cmake_docker_config }} -DSIGN_MODULES_PASSPHRASE=${{ secrets.SIGN_MODULES_PASSPHRASE }} -DSIGN_MODULES_KEYID=${{ secrets.SIGN_MODULES_KEYID }} -D$plugin=ON -DCONTAINERIZED=OFF -DCPACK_STRIP_FILES=OFF ${{ matrix.cmake_options_extra }} && \
+              yum install -y rpm-build.x86_64 && \
               cmake --build /hpcc-dev/build --parallel $(nproc) --target package"
           done
 
