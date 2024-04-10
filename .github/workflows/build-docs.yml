@@ -3,9 +3,10 @@ name: Build Documentation
 env:
   VCPKG_BINARY_SOURCES: "clear;nuget,GitHub,read"
   VCPKG_NUGET_REPOSITORY: "https://github.com/hpcc-systems/vcpkg"
-
+#uncommented push 
 on:
-  workflow_dispatch
+  #possibly comment this
+  #workflow_dispatch
   push:
 
 jobs:
@@ -90,7 +91,7 @@ jobs:
       - name: Checkout HPCC-Platform
         uses: actions/checkout@v3
         with:
-          repository: ${{ github.repository_owner }}/HPCC-Platform
+          repository: g-pan/HPCC-Platform
           ref: ${{ needs.preamble.outputs.community_ref }}
           submodules: recursive
           path: ${{ needs.preamble.outputs.folder_platform }}
@@ -148,11 +149,11 @@ jobs:
       - name: CMake documentation (community)
         if: ${{ !matrix.ln && !matrix.ee && !matrix.container && matrix.documentation }}
         run: |
-          mkdir -p {${{needs.preamble.outputs.folder_build }},EN_US,PT_BR}
+          mkdir -p {${{needs.preamble.outputs.folder_build }},EN_US,PT_BR,vcpkg_downloads}
           sudo rm -f ${{ needs.preamble.outputs.folder_build }}/CMakeCache.txt
           sudo rm -rf ${{ needs.preamble.outputs.folder_build }}/CMakeFiles
           docker run --rm --mount ${{ needs.preamble.outputs.mount_platform }} --mount ${{ needs.preamble.outputs.mount_build }} ${{ steps.vars.outputs.docker_tag_candidate_base }} "\
-            cmake -S /hpcc-dev/HPCC-Platform -B /hpcc-dev/build -DMAKE_DOCS_ONLY=ON -DUSE_NATIVE_LIBRARIES=ON -DDOCS_AUTO=ON -DDOC_LANGS=ALL && \
+            cmake -S /hpcc-dev/HPCC-Platform -B /hpcc-dev/build -DVCPKG_FILES_DIR=/hpcc-dev -DMAKE_DOCS_ONLY=ON -DUSE_NATIVE_LIBRARIES=ON -DDOCS_AUTO=ON -DDOC_LANGS=ALL && \
             cmake --build /hpcc-dev/build --parallel $(nproc) --target all"
           docker run --rm --mount ${{ needs.preamble.outputs.mount_platform }} --mount ${{ needs.preamble.outputs.mount_build }} ${{ steps.vars.outputs.docker_tag_candidate_base }} "cd /hpcc-dev/build/Release/docs/EN_US && zip ALL_HPCC_DOCS_EN_US-${{ needs.preamble.outputs.community_tag }}.zip *.pdf"
           docker run --rm --mount ${{ needs.preamble.outputs.mount_platform }} --mount ${{ needs.preamble.outputs.mount_build }} ${{ steps.vars.outputs.docker_tag_candidate_base }} "cd /hpcc-dev/build/Release/docs/PT_BR && zip ALL_HPCC_DOCS_PT_BR-${{ needs.preamble.outputs.community_tag }}.zip *.pdf"
@@ -161,9 +162,12 @@ jobs:
         if: ${{ !matrix.ln && !matrix.container && matrix.documentation }}
         uses: actions/upload-artifact@v4
         with:
-          name: HPCC-DocSet
+          name: HPCC-DocSet-9.6.601
           path: |
-            ${{ needs.preamble.outputs.folder_build }}/docs/EN_US/EclipseHelp/*.zip
+            ${{ needs.preamble.outputs.folder_build }}/Release/docs/*.zip
+            ${{ needs.preamble.outputs.folder_build }}/Release/docs/EN_US/*.zip
+            ${{ needs.preamble.outputs.folder_build }}/Release/docs/PT_BR/*.zip
+            #RMD-ECLIPSE
             ${{ needs.preamble.outputs.folder_build }}/docs/EN_US/HTMLHelp/*.zip
             ${{ needs.preamble.outputs.folder_build }}/docs/PT_BR/HTMLHelp/*.zip
           compression-level: 0
