@@ -13,11 +13,25 @@ jobs:
   preamble:
     name: Publish Release
     env:
+<<<<<<< HEAD
       # where are my other scripts
       #COMMUNITY_REF: "dc1cdacdbdda6e5ca1c5b836e130c2deb2d2fe62"
       # added REF for PreFPlane
       COMMUNITY_REF : "a661f9c1e1dcafbf95de9a3dfcd45a0fe393261a"
       # 9.6.0-rc5 - with MG fix
+=======
+      #COMMUNITY_REF: "9d70a3acbdaae3436884e9f5b132a297324c910e"
+#setting above REF to Placements doc  - containerbook
+      #JIMS-COMMUNITY_REF: "3caea9d7bbd04aef2a15fff8c65565b9b3867e7c"
+      #/\TEsting WITH JIMBOs REF
+      # set this to H30145 upd secrets 
+      # Now setting the REF to my Branch to build
+      #COMMUNITY_REF:  "d0034b6a8f96225f5252e77df3c73d2095db24ef"
+      COMMUNITY_REF:  "1aea2f65b5c01d92002e855eb01e03f3e716e979"
+      #UPDATED VCPKG _REF - below was LKG
+      #COMMUNITY_REF : "c8f648ae4f8445e3166c6fa87be59b832ccbf2e0"
+      ##In theory this should build H27280 
+>>>>>>> 5dc12d6 (Testing with H27280)
     runs-on: ubuntu-22.04
     permissions:
       contents: write
