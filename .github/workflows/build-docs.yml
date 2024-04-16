@@ -30,8 +30,12 @@ jobs:
       COMMUNITY_REF:  "1aea2f65b5c01d92002e855eb01e03f3e716e979"
       #UPDATED VCPKG _REF - below was LKG
       #COMMUNITY_REF : "c8f648ae4f8445e3166c6fa87be59b832ccbf2e0"
+<<<<<<< HEAD
       ##In theory this should build H27280 
 >>>>>>> 5dc12d6 (Testing with H27280)
+=======
+      ##In theory this should build H27280 OK
+>>>>>>> cb7a9b9 (Testing with H27280-2)
     runs-on: ubuntu-22.04
     permissions:
       contents: write
