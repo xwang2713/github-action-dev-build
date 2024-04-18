@@ -17,7 +17,7 @@ Clone this repository to your git repositories
 You must have a dockerhub account to build the virtual machine for building. Note your dockerhub account username and password. 
 Your Docker username is the same username that you use when you log into Docker  (docker.com or docker.io).
 
-##Setting Up Repository Secrets
+## Setting Up Repository Secrets
 You need to set up the secrets on your (clone) of the GitHub action-build repository. 
 (For example: github.com/yourREPO/github-action-dev-build) That's your fork of the repository. 
 1. Choose the settings tab from the 2nd row on the page (https://github.com/yourREPO/github-action-dev-build/settings) 
