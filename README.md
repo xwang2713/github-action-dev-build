@@ -12,6 +12,8 @@ To enable the github-action-builds to build from your git REF
 # Customization
 In order to get this build action to work for your individual repository. 
 Clone this repository to your git repositories 
+*Alternately* it may be easier to fork the repo instead of cloning 
+
 
 ## prerequisites: 
 You must have a dockerhub account to build the virtual machine for building. Note your dockerhub account username and password. 
