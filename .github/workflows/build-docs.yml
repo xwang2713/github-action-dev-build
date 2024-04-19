@@ -27,7 +27,7 @@ jobs:
       # set this to H30145 upd secrets 
       # Now setting the REF to my Branch to build
       #COMMUNITY_REF:  "d0034b6a8f96225f5252e77df3c73d2095db24ef"
-      COMMUNITY_REF:  "1aea2f65b5c01d92002e855eb01e03f3e716e979"
+      COMMUNITY_REF:  "d2fa84ee69e3741412afae466bf65454c85bea2b"
       #UPDATED VCPKG _REF - below was LKG
       #COMMUNITY_REF : "c8f648ae4f8445e3166c6fa87be59b832ccbf2e0"
 <<<<<<< HEAD
