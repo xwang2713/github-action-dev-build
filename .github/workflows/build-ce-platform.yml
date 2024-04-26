@@ -12,7 +12,7 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      COMMUNITY_REF: "c97a09f3c1fb41f6fe466e202da66a664c453f7c"
+      COMMUNITY_REF: "8e94be577a0ae81325914be56cc111584e108f1b"
       #COMMUNITY_REF:  <GIT REF>
       GITHUB_ACCOUNT: ${{ github.repository_owner }}
     runs-on: ubuntu-22.04
@@ -64,8 +64,9 @@ jobs:
     strategy:
       matrix:
         include:
+          - os: ubuntu-24.04
           #- os: ubuntu-22.04
-          - os: rockylinux-8
+          #- os: rockylinux-8
           #- os: centos-8
           #- os: centos-7
             #cmake_options_extra: "-DVCPKG_TARGET_TRIPLET=x64-centos-7-dynamic"
