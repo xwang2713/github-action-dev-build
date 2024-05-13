@@ -12,8 +12,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      COMMUNITY_REF: "c97a09f3c1fb41f6fe466e202da66a664c453f7c"
-      LN_REF: "8bee6ffc65ca8f3c930d4858e945947f7484bb0b"
+      COMMUNITY_REF: "5ba011903af4e547edd50adfaed9b94485e5d112"
+      LN_REF: "7e99a3ab92c34cec050223bce0e7df07551b817d"
       #COMMUNITY_REF:  <GIT REF>
       #LN_REF: <GIT REF>
       GITHUB_ACCOUNT: ${{ github.repository_owner }}
@@ -76,12 +76,12 @@ jobs:
     strategy:
       matrix:
         include:
-          #- os: ubuntu-22.04
+          - os: ubuntu-24.04
           #  name: LN
           #- os: centos-7
           #  name: LN
           #  cmake_options_extra: "-DVCPKG_TARGET_TRIPLET=x64-centos-7-dynamic"
-          - os: rockylinux-8
+          #- os: rockylinux-8
       fail-fast: false
 
     steps:
