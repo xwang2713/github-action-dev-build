@@ -15,7 +15,7 @@ jobs:
       # where are my other scripts
       #COMMUNITY_REF: "dc1cdacdbdda6e5ca1c5b836e130c2deb2d2fe62"
       # added REF for ZAP
-      COMMUNITY_REF : "db681f9a75d93f55998751130f5725ef6134e405"
+      COMMUNITY_REF : "661b80c65d6ec29c5c168efe9ee94867284fa590"
       # 9.6.0-rc5 - with MG fix
     runs-on: ubuntu-22.04
     permissions:
