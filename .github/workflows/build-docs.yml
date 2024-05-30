@@ -22,6 +22,7 @@ jobs:
 =======
       #COMMUNITY_REF: "9d70a3acbdaae3436884e9f5b132a297324c910e"
 #setting above REF to Placements doc  - containerbook
+<<<<<<< HEAD
       #JIMS-COMMUNITY_REF: "3caea9d7bbd04aef2a15fff8c65565b9b3867e7c"
       #/\TEsting WITH JIMBOs REF
       # set this to H30145 upd secrets 
@@ -34,6 +35,10 @@ jobs:
       ##In theory this should build H27280 
 >>>>>>> 5dc12d6 (Testing with H27280)
 =======
+=======
+            # added REF for ZAP
+      COMMUNITY_REF : "db681f9a75d93f55998751130f5725ef6134e405"
+>>>>>>> 94b1810 (Update build-docs.yml)
       ##In theory this should build H27280 OK
 >>>>>>> cb7a9b9 (Testing with H27280-2)
     runs-on: ubuntu-22.04
