@@ -23,6 +23,7 @@ jobs:
       #COMMUNITY_REF: "9d70a3acbdaae3436884e9f5b132a297324c910e"
 #setting above REF to Placements doc  - containerbook
 <<<<<<< HEAD
+<<<<<<< HEAD
       #JIMS-COMMUNITY_REF: "3caea9d7bbd04aef2a15fff8c65565b9b3867e7c"
       #/\TEsting WITH JIMBOs REF
       # set this to H30145 upd secrets 
@@ -45,6 +46,11 @@ jobs:
 >>>>>>> 10e6f45 (Update build-docs.yml)
       ##In theory this should build H27280 OK
 >>>>>>> cb7a9b9 (Testing with H27280-2)
+=======
+            # added REF for PrefPane a661f9c
+      COMMUNITY_REF : "a661f9c1e1dcafbf95de9a3dfcd45a0fe393261a"
+      #
+>>>>>>> 810a689 (BuilderBranch for PrePlanes a66etc AND RM Eclipse)
     runs-on: ubuntu-22.04
     permissions:
       contents: write
@@ -194,7 +200,11 @@ jobs:
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/*.zip
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/EN_US/*.zip
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/PT_BR/*.zip
+<<<<<<< HEAD
             #RMD-ECLIPSE
+=======
+           #Removed the Eclipse
+>>>>>>> 810a689 (BuilderBranch for PrePlanes a66etc AND RM Eclipse)
             ${{ needs.preamble.outputs.folder_build }}/docs/EN_US/HTMLHelp/*.zip
             ${{ needs.preamble.outputs.folder_build }}/docs/PT_BR/HTMLHelp/*.zip
           compression-level: 0
