@@ -37,8 +37,12 @@ jobs:
 =======
 =======
             # added REF for ZAP
+<<<<<<< HEAD
       COMMUNITY_REF : "db681f9a75d93f55998751130f5725ef6134e405"
 >>>>>>> 94b1810 (Update build-docs.yml)
+=======
+      COMMUNITY_REF : "661b80c65d6ec29c5c168efe9ee94867284fa590"
+>>>>>>> 10e6f45 (Update build-docs.yml)
       ##In theory this should build H27280 OK
 >>>>>>> cb7a9b9 (Testing with H27280-2)
     runs-on: ubuntu-22.04
