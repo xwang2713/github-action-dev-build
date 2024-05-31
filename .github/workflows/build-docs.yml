@@ -13,44 +13,9 @@ jobs:
   preamble:
     name: Publish Release
     env:
-<<<<<<< HEAD
-      # where are my other scripts
-      #COMMUNITY_REF: "dc1cdacdbdda6e5ca1c5b836e130c2deb2d2fe62"
-      # added REF for PreFPlane
-      COMMUNITY_REF : "a661f9c1e1dcafbf95de9a3dfcd45a0fe393261a"
-      # 9.6.0-rc5 - with MG fix
-=======
-      #COMMUNITY_REF: "9d70a3acbdaae3436884e9f5b132a297324c910e"
-#setting above REF to Placements doc  - containerbook
-<<<<<<< HEAD
-<<<<<<< HEAD
-      #JIMS-COMMUNITY_REF: "3caea9d7bbd04aef2a15fff8c65565b9b3867e7c"
-      #/\TEsting WITH JIMBOs REF
-      # set this to H30145 upd secrets 
-      # Now setting the REF to my Branch to build
-      #COMMUNITY_REF:  "d0034b6a8f96225f5252e77df3c73d2095db24ef"
-      COMMUNITY_REF:  "d2fa84ee69e3741412afae466bf65454c85bea2b"
-      #UPDATED VCPKG _REF - below was LKG
-      #COMMUNITY_REF : "c8f648ae4f8445e3166c6fa87be59b832ccbf2e0"
-<<<<<<< HEAD
-      ##In theory this should build H27280 
->>>>>>> 5dc12d6 (Testing with H27280)
-=======
-=======
-            # added REF for ZAP
-<<<<<<< HEAD
-      COMMUNITY_REF : "db681f9a75d93f55998751130f5725ef6134e405"
->>>>>>> 94b1810 (Update build-docs.yml)
-=======
-      COMMUNITY_REF : "661b80c65d6ec29c5c168efe9ee94867284fa590"
->>>>>>> 10e6f45 (Update build-docs.yml)
-      ##In theory this should build H27280 OK
->>>>>>> cb7a9b9 (Testing with H27280-2)
-=======
-            # added REF for PrefPane a661f9c
+      # added REF for PrefPane a661f9c
       COMMUNITY_REF : "a661f9c1e1dcafbf95de9a3dfcd45a0fe393261a"
       #
->>>>>>> 810a689 (BuilderBranch for PrePlanes a66etc AND RM Eclipse)
     runs-on: ubuntu-22.04
     permissions:
       contents: write
@@ -200,11 +165,7 @@ jobs:
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/*.zip
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/EN_US/*.zip
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/PT_BR/*.zip
-<<<<<<< HEAD
             #RMD-ECLIPSE
-=======
-           #Removed the Eclipse
->>>>>>> 810a689 (BuilderBranch for PrePlanes a66etc AND RM Eclipse)
             ${{ needs.preamble.outputs.folder_build }}/docs/EN_US/HTMLHelp/*.zip
             ${{ needs.preamble.outputs.folder_build }}/docs/PT_BR/HTMLHelp/*.zip
           compression-level: 0
