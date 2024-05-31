@@ -163,8 +163,6 @@ jobs:
         with:
           name: HPCC-DocSet
           path: |
-            # commenting out Eclipse 
-           #${{ needs.preamble.outputs.folder_build }}/docs/EN_US/EclipseHelp/*.zip
             ${{ needs.preamble.outputs.folder_build }}/docs/EN_US/HTMLHelp/*.zip
             ${{ needs.preamble.outputs.folder_build }}/docs/PT_BR/HTMLHelp/*.zip
           compression-level: 0
