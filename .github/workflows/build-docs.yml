@@ -13,8 +13,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # added REF for PrefPane a661f9c
-      COMMUNITY_REF : "a661f9c1e1dcafbf95de9a3dfcd45a0fe393261a"
+      # REF HPCC-22453 importzap
+      COMMUNITY_REF : "d6a5523372e00e4c9140d23035690b13169f2a90"
       #
     runs-on: ubuntu-22.04
     permissions:
