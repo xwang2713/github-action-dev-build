@@ -13,8 +13,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # REF HPCC-22453 importzap
-      COMMUNITY_REF : "d6a5523372e00e4c9140d23035690b13169f2a90"
+      # REF -URLS
+      COMMUNITY_REF : "917dcf28ba58b3fa106cd6037654d16a456862cc"
       #
     runs-on: ubuntu-22.04
     permissions:
