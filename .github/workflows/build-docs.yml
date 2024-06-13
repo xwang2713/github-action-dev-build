@@ -13,8 +13,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # REF -URLS
-      COMMUNITY_REF : "917dcf28ba58b3fa106cd6037654d16a456862cc"
+      # REF -PT-BR-9.6
+      COMMUNITY_REF : "b808b7c2864243ad5a18852f94ab9575714f787a"
       #
     runs-on: ubuntu-22.04
     permissions:
