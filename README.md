@@ -49,6 +49,8 @@ Alternatively you can filter on branch name, if you had ABCBranch you could use
   Another place to find your REF (or SHA) is to go to Github.com 
   If you pushed your file - on the "Open a Pull Request" Page it displays the Git REF (aka SHA)
   There is also an button next to the REF "Copy the full SHA" - does this next bit in one click
+## Get the REF From GitHub
+To get the REF: on Github site click on the commit and it is on the top right of the commit 
 
 Copy the entire string that compromises the community REF for the desired branch/commit
 
