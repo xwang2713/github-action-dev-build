@@ -13,8 +13,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # REF -H32110
-      COMMUNITY_REF : "4e587a0c06a68e20a2c90300b01981ece2055cbd"
+      # REF -H31898
+      COMMUNITY_REF : "09f545fc2ea4024edd7ca4b90ddaa55612b45e3d"
       #
     runs-on: ubuntu-22.04
     permissions:
