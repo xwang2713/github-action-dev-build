@@ -64,9 +64,9 @@ jobs:
     strategy:
       matrix:
         include:
-          #- os: ubuntu-24.04
+          - os: ubuntu-24.04
           #- os: ubuntu-22.04
-          - os: rockylinux-8
+          #- os: rockylinux-8
           #- os: centos-8
           #- os: centos-7
             #cmake_options_extra: "-DVCPKG_TARGET_TRIPLET=x64-centos-7-dynamic"
