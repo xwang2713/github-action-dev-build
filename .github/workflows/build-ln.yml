@@ -12,8 +12,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      COMMUNITY_REF: "5ba011903af4e547edd50adfaed9b94485e5d112"
-      LN_REF: "7e99a3ab92c34cec050223bce0e7df07551b817d"
+      COMMUNITY_REF: "ca6b7012e57b084d0dad2503deea11ceed114d18"
+      LN_REF: "e2a4f77dfad860027121e1420a727c23b9bb8d1e"
       #COMMUNITY_REF:  <GIT REF>
       #LN_REF: <GIT REF>
       GITHUB_ACCOUNT: ${{ github.repository_owner }}
