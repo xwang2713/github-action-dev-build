@@ -13,8 +13,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # REF -H31898
-      COMMUNITY_REF : "09f545fc2ea4024edd7ca4b90ddaa55612b45e3d"
+      # REF Valdirs-PR-18846
+      COMMUNITY_REF : "61c71695c9095d8837096dc72f23e105d45b8bae"
       #
     runs-on: ubuntu-22.04
     permissions:
