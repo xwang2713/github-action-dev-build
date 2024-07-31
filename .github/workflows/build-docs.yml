@@ -9,6 +9,13 @@ on:
   #push:
 
 jobs:
+  Test-hyperlinks:
+    uses: ./.github/workflows/test-hyperlinks.yml
+    with:
+      file-path: "docs/"
+      file-type: "xml"
+      debug-mode: false
+      
   preamble:
     name: Publish Release
     env:
