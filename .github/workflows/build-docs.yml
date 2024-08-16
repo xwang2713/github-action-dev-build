@@ -20,8 +20,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # Removal of HARDWARE.XML- squashed 
-      COMMUNITY_REF : "87ca325a8a453e46d158b83703a2e75ebca8c0ce"
+      # Removal of HARDWARE.XML- TESTING 
+      COMMUNITY_REF : "f725531447c595ffccec970b1f6e1f666324fc77"
       #
     runs-on: ubuntu-22.04
     permissions:
@@ -167,7 +167,7 @@ jobs:
         if: ${{ !matrix.ln && !matrix.container && matrix.documentation }}
         uses: actions/upload-artifact@v4
         with:
-          name: HPCC-DocSet-9.8.x
+          name: HPCC-DocSet-9.8.x-t
           path: |
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/*.zip
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/EN_US/*.zip
