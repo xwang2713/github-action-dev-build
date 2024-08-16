@@ -20,8 +20,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # Removal of HARDWARE.XML
-      COMMUNITY_REF : "d1c682c6ba1e6c97cb8d999ce1b50182a7e4d81c"
+      # Removal of HARDWARE.XML- orig comm. 
+      COMMUNITY_REF : "e90b61b1ecc41e719de94cdb651a4b7c8d949c2d"
       #
     runs-on: ubuntu-22.04
     permissions:
