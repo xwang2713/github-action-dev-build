@@ -20,8 +20,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # Removal of HARDWARE.XML- TESTING 
-      COMMUNITY_REF : "f725531447c595ffccec970b1f6e1f666324fc77"
+      # Updates to Cost Tracking HPCC-31972
+      COMMUNITY_REF : "7846322f7c2e1a868c47f603b460a9f85af1e869"
       #
     runs-on: ubuntu-22.04
     permissions:
