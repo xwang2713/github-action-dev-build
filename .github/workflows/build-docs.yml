@@ -20,8 +20,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # Updates to Cost Tracking HPCC-31972
-      COMMUNITY_REF : "7846322f7c2e1a868c47f603b460a9f85af1e869"
+      # Tracking HPCC-32399
+      COMMUNITY_REF : "b146deccd45004e9d52db9029f98767c871f1d12"
       #
     runs-on: ubuntu-22.04
     permissions:
@@ -167,7 +167,7 @@ jobs:
         if: ${{ !matrix.ln && !matrix.container && matrix.documentation }}
         uses: actions/upload-artifact@v4
         with:
-          name: HPCC-DocSet-9.8.x-t
+          name: HPCC-DocSet-9.8.x
           path: |
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/*.zip
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/EN_US/*.zip
