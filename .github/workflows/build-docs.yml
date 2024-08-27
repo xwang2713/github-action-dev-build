@@ -20,8 +20,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # Tracking HPCC-32398
-      COMMUNITY_REF : "2ce6f6edf8546e9a4e0ec1d39a8234ac733f3bcd"
+      # Tracking HPCC-32399
+      COMMUNITY_REF : "26ef516504b523787d022ad3bbf540c6fa596a6b"
       #
     runs-on: ubuntu-22.04
     permissions:
@@ -167,7 +167,7 @@ jobs:
         if: ${{ !matrix.ln && !matrix.container && matrix.documentation }}
         uses: actions/upload-artifact@v4
         with:
-          name: HPCC-32398-build
+          name: HPCC-32399-BldTst
           path: |
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/*.zip
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/EN_US/*.zip
