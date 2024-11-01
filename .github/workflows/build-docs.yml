@@ -20,8 +20,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # Tracking HPCC-32018
-      COMMUNITY_REF : "5b77c7e1c8e7ca1f5babb3eaa4eb5463274c63f3"
+      # Tracking HPCC-32445
+      COMMUNITY_REF : "fed2cc24eca42efdc7f721b337bb900515d11366"
       #
     runs-on: ubuntu-22.04
     permissions:
@@ -167,7 +167,7 @@ jobs:
         if: ${{ !matrix.ln && !matrix.container && matrix.documentation }}
         uses: actions/upload-artifact@v4
         with:
-          name: HPCC-32018-Artifacts
+          name: HPCC-32445-Artifacts
           path: |
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/*.zip
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/EN_US/*.zip
