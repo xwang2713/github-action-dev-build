@@ -20,8 +20,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # Tracking PT-T2
-      COMMUNITY_REF : "2e8c4605ed0236226b59fe51d957df4d08efe519"
+      # Tracking PT-T4
+      COMMUNITY_REF : "2dba1f78a9caf569d899bb2f815dfa03fe827323"
       #
     runs-on: ubuntu-22.04
     permissions:
@@ -167,7 +167,7 @@ jobs:
         if: ${{ !matrix.ln && !matrix.container && matrix.documentation }}
         uses: actions/upload-artifact@v4
         with:
-          name: HPCC-BldTest3
+          name: HPCC-BldTest4
           path: |
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/*.zip
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/EN_US/*.zip
