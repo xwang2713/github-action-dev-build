@@ -20,8 +20,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # Tracking PT-T3
-      COMMUNITY_REF : "e553544046708bed573461fef1b607400902c02c"
+      # Tracking PT-T2
+      COMMUNITY_REF : "2e8c4605ed0236226b59fe51d957df4d08efe519"
       #
     runs-on: ubuntu-22.04
     permissions:
