@@ -21,7 +21,7 @@ jobs:
     name: Publish Release
     env:
       # Tracking HPCC-33102
-      COMMUNITY_REF : "d788960e7e04acc8a01adeaa901ce9f47a38e491"
+      COMMUNITY_REF : "c22f2fae1f59fcc21ddbb7fc8471d12a743c7ad9"
       #
     runs-on: ubuntu-22.04
     permissions:
