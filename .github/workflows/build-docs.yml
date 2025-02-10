@@ -21,7 +21,7 @@ jobs:
     name: Publish Release
     env:
       # Tracking : font chg  
-      COMMUNITY_REF : "4cc4a6d5b93a6ef9bc57b1d767a13eed6a900fc3"
+      COMMUNITY_REF : "2532e643fdc1842e1c68741cf048f7c373d67679"
       #
     runs-on: ubuntu-22.04
     permissions:
