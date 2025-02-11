@@ -21,7 +21,7 @@ jobs:
     name: Publish Release
     env:
       # Tracking : font role-shade3
-      COMMUNITY_REF : "f40c157fea81e87aa66c8cb4433659f06f1dbe2d"
+      COMMUNITY_REF : "9cc9303962cb6a1c85fa4e8ce548cbb120ca0e22"
       #
     runs-on: ubuntu-22.04
     permissions:
