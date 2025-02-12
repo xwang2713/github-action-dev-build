@@ -20,8 +20,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # Tracking : font role-shade3
-      COMMUNITY_REF : "9cc9303962cb6a1c85fa4e8ce548cbb120ca0e22"
+      # Tracking : HPCC-33402
+      COMMUNITY_REF : "9ef4135f02a53b5528e2f103233441cfb57159ab"
       #
     runs-on: ubuntu-22.04
     permissions:
