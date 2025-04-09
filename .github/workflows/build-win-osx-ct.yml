@@ -12,7 +12,7 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      COMMUNITY_REF: "34513d235ff00e026ce9e69650eadd9650ac64dc"
+      COMMUNITY_REF: "221c82d716c8acd016b409e3f8c20e84b70a74a1"
       LN_REF:        "a4d0fdf699abfbf4331c59c4712163c25f6951e3"
       #COMMUNITY_REF: <GIT REF>
       #LN_REF: <GIT REF>
