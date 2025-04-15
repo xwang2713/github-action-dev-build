@@ -20,8 +20,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # Tracking : HPCC-33192-YET  
-      COMMUNITY_REF : "56a2c13df1da72de12b80046ab6603fd19704714"
+      # Tracking : HPCC-33192-T  
+      COMMUNITY_REF : "3baa0fe6810f5c36be9536b6443fe298095f65d4"
       #
     runs-on: ubuntu-22.04
     permissions:
