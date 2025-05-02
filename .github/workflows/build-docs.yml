@@ -20,8 +20,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # Tracking : HPCC-33192-2nd  Test  
-      COMMUNITY_REF : "953d2d74543007584c4b3e5d47cb8c78a82b71f4"
+      # Tracking : Test JIMS branch  
+      COMMUNITY_REF : "09458a9d5e9d10441c6296a8e6513de4c9594d5d"
       #
     runs-on: ubuntu-22.04
     permissions:
