@@ -20,8 +20,8 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      # Tracking : Test Build fr JIM
-      COMMUNITY_REF : "9751d8e4ad605445c77f7f5309b13df9ea92ef9a"
+      # Tracking : 33264
+      COMMUNITY_REF : "4feb5741059d812a12d3be7fcec938c24aa77492"
       #
     runs-on: ubuntu-22.04
     permissions:
