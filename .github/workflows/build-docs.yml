@@ -3,12 +3,20 @@ name: Build Documentation
 env:
   VCPKG_BINARY_SOURCES: "clear;nuget,GitHub,read"
   VCPKG_NUGET_REPOSITORY: "https://github.com/hpcc-systems/vcpkg"
-
+#uncommented push 
 on:
-  workflow_dispatch
-  #push:
+  #possibly comment this
+  #workflow_dispatch
+  push:
 
 jobs:
+  Test-hyperlinks:
+    uses: ./.github/workflows/test-hyperlinks.yml
+    with:
+      file-path: "docs/"
+      file-type: "xml"
+      debug-mode: false
+
   preamble:
     name: Publish Release
     env:
@@ -149,7 +157,7 @@ jobs:
       - name: CMake documentation (community)
         if: ${{ !matrix.ln && !matrix.ee && !matrix.container && matrix.documentation }}
         run: |
-          mkdir -p {${{needs.preamble.outputs.folder_build }},EN_US,PT_BR}
+          mkdir -p {${{needs.preamble.outputs.folder_build }},EN_US,PT_BR,vcpkg_downloads}
           sudo rm -f ${{ needs.preamble.outputs.folder_build }}/CMakeCache.txt
           sudo rm -rf ${{ needs.preamble.outputs.folder_build }}/CMakeFiles
           docker run --rm --mount ${{ needs.preamble.outputs.mount_platform }} --mount ${{ needs.preamble.outputs.mount_build }} ${{ steps.vars.outputs.docker_tag_candidate_base }} "\
@@ -162,7 +170,7 @@ jobs:
         if: ${{ !matrix.ln && !matrix.container && matrix.documentation }}
         uses: actions/upload-artifact@v4
         with:
-          name: html-help-documents
+          name: HPCC-Docs
           path: |
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/*.zip
             ${{ needs.preamble.outputs.folder_build }}/Release/docs/EN_US/*.zip
@@ -171,3 +179,4 @@ jobs:
             ${{ needs.preamble.outputs.folder_build }}/docs/EN_US/HTMLHelp/*.zip
             ${{ needs.preamble.outputs.folder_build }}/docs/PT_BR/HTMLHelp/*.zip
           compression-level: 0
+  

@@ -1,54 +1,60 @@
-name: Build CE Platform
+name: Build LN Platform
 
 env:
   VCPKG_BINARY_SOURCES: "clear;nuget,GitHub,read"
   VCPKG_NUGET_REPOSITORY: "https://github.com/hpcc-systems/vcpkg"
 
 on:
-  workflow_dispatch
-  #push:
+  #workflow_dispatch
+  push:
 
 jobs:
   preamble:
     name: Publish Release
     env:
-      COMMUNITY_REF: "089328a11a11bf9e8c4f7d0264d7915f33b0ca57"
+      COMMUNITY_REF: "dc1cdacdbdda6e5ca1c5b836e130c2deb2d2fe62"
+      LN_REF: "9e672fa4dfb323569459f466bddda77638930abe"
       #COMMUNITY_REF:  <GIT REF>
-      GITHUB_ACCOUNT: ${{ github.repository_owner }}
     runs-on: ubuntu-22.04
     permissions:
       contents: write
     outputs:
       folder_platform: ${{ steps.vars.outputs.folder_platform }}
       mount_platform: ${{ steps.vars.outputs.mount_platform }}
+      folder_ln: ${{ steps.vars.outputs.folder_ln }}
+      mount_ln: ${{ steps.vars.outputs.mount_ln }}
       folder_build: ${{ steps.vars.outputs.folder_build }}
       mount_build: ${{ steps.vars.outputs.mount_build }}
       community_ref: ${{ steps.vars.outputs.community_ref }}
       community_tag: ${{ steps.vars.outputs.community_tag }}
+      internal_tag: ${{ steps.vars.outputs.internal_tag }}
       hpcc_version: ${{ steps.vars.outputs.hpcc_version }}
       candidate_base_branch: ${{ steps.vars.outputs.candidate_base_branch }}
       candidate_branch: ${{ steps.vars.outputs.candidate_branch }}
       cmake_docker_config: ${{ steps.vars.outputs.cmake_docker_config }}
       gpg_import: ${{ steps.vars.outputs.gpg_import }}
-      github_account: ${{ steps.vars.outputs.github_account }}
     steps:
       - name: Calculate vars
         id: vars
         run: |
           echo "folder_platform=${{ github.workspace }}/HPCC-Platform" >> $GITHUB_OUTPUT
           echo 'mount_platform=source="${{ github.workspace }}/HPCC-Platform",target=/hpcc-dev/HPCC-Platform,type=bind,consistency=cached' >> $GITHUB_OUTPUT
+          echo "folder_ln=${{ github.workspace }}/LN" >> $GITHUB_OUTPUT
+          echo 'mount_ln=source="${{ github.workspace }}/LN",target=/hpcc-dev/LN,type=bind,consistency=cached' >> $GITHUB_OUTPUT
           echo "folder_build=${{ github.workspace }}/build" >> $GITHUB_OUTPUT
           echo 'mount_build=source="${{ github.workspace }}/build",target=/hpcc-dev/build,type=bind,consistency=cached' >> $GITHUB_OUTPUT
           community_ref=${{ env.COMMUNITY_REF }}
           echo "community_ref=$community_ref" >> $GITHUB_OUTPUT
-          community_tag=$(echo $community_ref | cut -d'/' -f3)
+          ln_ref=${{ env.LN_REF }}
+          community_tag=$(echo $ln_ref | cut -d'/' -f3)
           echo "community_tag=$community_tag" >> $GITHUB_OUTPUT
+          echo "internal_tag=$(echo $community_tag | sed 's/community/internal/')" >> $GITHUB_OUTPUT
           echo "hpcc_version=$(echo $community_tag | sed 's/community_//' | sed 's/-[0-9]$//')" >> $GITHUB_OUTPUT
           community_base_ref=${{ github.event.base_ref || github.ref }}
           candidate_branch=$(echo $community_base_ref | cut -d'/' -f3)
           echo "candidate_branch=$candidate_branch" >> $GITHUB_OUTPUT
           echo "candidate_base_branch=$(echo $candidate_branch | awk -F'.' -v OFS='.' '{ $3="x"; print }')" >> $GITHUB_OUTPUT
-          echo "cmake_docker_config=-DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_FILES_DIR=/hpcc-dev -DCPACK_THREADS=0 -DUSE_OPTIONAL=OFF -DSIGN_MODULES=${{ env.GITHUB_ACCOUNT == 'hpcc-systems' && 'ON' || 'OFF' }}" >> $GITHUB_OUTPUT
+          echo "cmake_docker_config=-DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_FILES_DIR=/hpcc-dev -DCPACK_THREADS=0 -DUSE_OPTIONAL=OFF -DSIGN_MODULES=${{ github.repository_owner == 'hpcc-systems' && 'ON' || 'OFF' }}" >> $GITHUB_OUTPUT
           echo 'gpg_import=gpg --batch --import /hpcc-dev/build/private.key' >> $GITHUB_OUTPUT
 
       - name: Print vars
@@ -62,12 +68,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-24.04
-          #- os: ubuntu-22.04
-          #- os: rockylinux-8
-          #- os: centos-8
-          #- os: centos-7
-            #cmake_options_extra: "-DVCPKG_TARGET_TRIPLET=x64-centos-7-dynamic"
+          - os: ubuntu-22.04
+            name: LN
+          - os: centos-7
+            name: LN
+            cmake_options_extra: "-DVCPKG_TARGET_TRIPLET=x64-centos-7-dynamic"
       fail-fast: false
 
     steps:
@@ -92,10 +97,19 @@ jobs:
       - name: Checkout HPCC-Platform
         uses: actions/checkout@v3
         with:
-          repository: ${{ needs.preamble.outputs.github_account }}/HPCC-Platform
+          repository: ${{ github.repository_owner }}/HPCC-Platform
           ref: ${{ needs.preamble.outputs.community_ref }}
           submodules: recursive
           path: ${{ needs.preamble.outputs.folder_platform }}
+
+      - name: Checkout LN
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/LN
+          token: ${{ secrets.LNB_TOKEN }}
+          ref: ${{ needs.preamble.outputs.internal_ref }}
+          submodules: recursive
+          path: ${{ needs.preamble.outputs.folder_ln }}
 
       - name: Calculate vars
         id: vars
@@ -129,9 +143,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: ${{ needs.preamble.outputs.folder_platform }}/dockerfiles/vcpkg/${{ matrix.os }}.dockerfile
           context: ${{ needs.preamble.outputs.folder_platform }}/dockerfiles/vcpkg
-
-          push: ${{ needs.preamble.outputs.github_account == 'hpcc-systems' }}
-          load: ${{ needs.preamble.outputs.github_account != 'hpcc-systems' }}
+          push: ${{ github.repository_owner == 'hpcc-systems' }}
+          load: ${{ github.repository_owner != 'hpcc-systems' }}
           build-args: |
             VCPKG_REF=${{ steps.vars.outputs.vcpkg_sha_short }}
           tags: |
@@ -141,26 +154,21 @@ jobs:
             type=registry,ref=${{ steps.vars.outputs.docker_tag }}
           cache-to: type=inline
 
-      # Communtiy Build
-      - name: CMake Packages (community)
-        if: ${{ !matrix.ln && !matrix.ee && !matrix.container && !matrix.documentation }}
+      # Internal Build
+      - name: CMake Containerized Packages (internal)
         run: |
-          echo "gcc packages installed"
-          sudo rpm -qa 
-          mkdir -p ${{needs.preamble.outputs.folder_build }}
+          mkdir -p ${{ needs.preamble.outputs.folder_build }}
           echo "${{ secrets.SIGNING_SECRET }}" > ${{ needs.preamble.outputs.folder_build }}/private.key
-
           sudo rm -f ${{ needs.preamble.outputs.folder_build }}/CMakeCache.txt
           sudo rm -rf ${{ needs.preamble.outputs.folder_build }}/CMakeFiles
-
-          docker run --rm --mount ${{ needs.preamble.outputs.mount_platform }} --mount ${{ needs.preamble.outputs.mount_build }} ${{ steps.vars.outputs.docker_tag_candidate_base }} "${{ needs.preamble.outputs.gpg_import }} && \
-            cmake -S /hpcc-dev/HPCC-Platform -B /hpcc-dev/build -DVCPKG_FILES_DIR=/hpcc-dev ${{ needs.preamble.outputs.cmake_docker_config }} -DSIGN_MODULES_PASSPHRASE=${{ secrets.SIGN_MODULES_PASSPHRASE }} -DSIGN_MODULES_KEYID=${{ secrets.SIGN_MODULES_KEYID }} -DPLATFORM=ON -DCONTAINERIZED=OFF -DCPACK_STRIP_FILES=OFF ${{ matrix.cmake_options_extra }} && \
+          docker run --rm --mount ${{ needs.preamble.outputs.mount_platform }} --mount ${{ needs.preamble.outputs.mount_ln }} --mount ${{ needs.preamble.outputs.mount_build }} ${{ steps.vars.outputs.docker_tag_candidate_base }} "${{ needs.preamble.outputs.gpg_import }} && \
+            cmake -S /hpcc-dev/LN -B /hpcc-dev/build -DHPCC_SOURCE_DIR=/hpcc-dev/HPCC-Platform ${{ needs.preamble.outputs.cmake_docker_config }} -DSIGN_MODULES_PASSPHRASE=${{ secrets.SIGN_MODULES_PASSPHRASE }} -DSIGN_MODULES_KEYID=${{ secrets.SIGN_MODULES_KEYID }} -DINCLUDE_PLUGINS=ON -DCONTAINERIZED=ON -DSUPPRESS_REMBED=ON -DSUPPRESS_V8EMBED=ON -DSUPPRESS_SPARK=ON -DCPACK_STRIP_FILES=OFF ${{ matrix.cmake_options_extra }} && \
             cmake --build /hpcc-dev/build --parallel $(nproc) --target package"
 
-      - name: Upload Artifacts CE Platform
+      - name: Upload Artifacts LN Platform
         uses: actions/upload-artifact@v4
         with:
-          name: CE-HPCC-Platform-${{ matrix.os }}
+          name: LN-HPCC-Platform-${{ matrix.os }}
           path: |
             ${{ needs.preamble.outputs.folder_build }}/*.deb
             ${{ needs.preamble.outputs.folder_build }}/*.rpm
