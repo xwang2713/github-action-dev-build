@@ -148,7 +148,7 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           file: ${{ needs.preamble.outputs.folder_platform }}/dockerfiles/vcpkg/${{ matrix.os }}.dockerfile
-          context: ${{ needs.preamble.outputs.folder_platform }}/dockerfiles/vcpkg
+          context: ${{ needs.preamble.outputs.folder_platform }}/dockerfiles
           push: true
           load: false
           build-args: |
