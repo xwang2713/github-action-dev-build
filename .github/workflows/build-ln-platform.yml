@@ -103,7 +103,7 @@ jobs:
       - name: Checkout HPCC-Platform
         uses: actions/checkout@v3
         with:
-          repository: ${{ github.repository_owner }}/HPCC-Platform
+          repository: hpcc-systems/HPCC-Platform
           ref: ${{ needs.preamble.outputs.community_ref }}
           submodules: recursive
           path: ${{ needs.preamble.outputs.folder_platform }}
@@ -111,7 +111,7 @@ jobs:
       - name: Checkout LN
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository_owner }}/LN
+          repository: hpcc-systems/LN
           token: ${{ secrets.LNB_TOKEN }}
           ref: ${{ needs.preamble.outputs.internal_ref }}
           submodules: recursive
