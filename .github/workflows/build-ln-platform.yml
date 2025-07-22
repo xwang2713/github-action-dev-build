@@ -12,8 +12,10 @@ jobs:
   preamble:
     name: Publish Release
     env:
-      COMMUNITY_REF: "dc1cdacdbdda6e5ca1c5b836e130c2deb2d2fe62"
-      LN_REF: "9e672fa4dfb323569459f466bddda77638930abe"
+      #COMMUNITY_REF: "dc1cdacdbdda6e5ca1c5b836e130c2deb2d2fe62"
+      #LN_REF: "9e672fa4dfb323569459f466bddda77638930abe"
+      COMMUNITY_REF: "7140a3c8d7353b33b0e2af4545ba1bd62cd3b636"                                                                      
+      LN_REF: "74fa2ba91ff7e9d5d134318e351e0b7f20edc9ee"
       #COMMUNITY_REF:  <GIT REF>
     runs-on: ubuntu-22.04
     permissions:
@@ -68,11 +70,15 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-22.04
+         # - os: ubuntu-22.04
+         #   name: LN
+         # - os: centos-7
+         #   name: LN
+         #   cmake_options_extra: "-DVCPKG_TARGET_TRIPLET=x64-centos-7-dynamic"
+          - os: rockylinux-8
             name: LN
-          - os: centos-7
-            name: LN
-            cmake_options_extra: "-DVCPKG_TARGET_TRIPLET=x64-centos-7-dynamic"
+            cmake_options_extra: ""
+            ln: true
       fail-fast: false
 
     steps:
